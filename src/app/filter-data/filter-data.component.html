@@ -1,0 +1,25 @@
+<div class="col-md-6">
+  <label for="id_class" class="form-label"> Choose Class</label>
+  <select
+    class="select col-md-10 form-control"
+    id="id_class"
+  >
+    <option *ngFor="let item of classList" value="{{ item }}">
+      {{ item }}
+    </option>
+  </select>
+</div>
+
+<div class="col-md-6 align-right">
+  <label for="id_subject" class="form-label"> Choose Subject</label>
+  <select
+    class="select col-md-10 form-control"
+    id="id_subject"
+    [(ngModel)]="subject"
+  >
+    <option *ngFor="let item of subjectList" value="{{ item }}">
+      {{ item }}
+    </option>
+  </select>
+  <button type="button" class="btn btn-success" (click)="search()">Search</button>
+</div>

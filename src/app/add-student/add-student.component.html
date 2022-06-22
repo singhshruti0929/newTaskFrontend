@@ -1,0 +1,143 @@
+<div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="loginModalLabel">Student Form</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form
+        [formGroup]="registerForm"
+        (ngSubmit)="(registerFormSubmit)"
+        class="row g-3"
+      >
+        <div class="col-md-6">
+          <label for="id_name" class="form-label">Name</label>
+          <input
+            formControlName="name"
+            type="text"
+            class="form-control"
+            id="id_name"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="id_age" class="form-label">Age </label>
+          <input
+            formControlName="age"
+            type="number"
+            class="form-control"
+            id="id_age"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="id_rollNo" class="form-label">Roll Number</label>
+          <input
+            formControlName="rollNo"
+            type="number"
+            class="form-control"
+            id="id_rollNo"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label for="id_class" class="form-label"> Choose Class</label>
+          <select
+            class="select col-md-10 form-control"
+            formControlName="class"
+            class="form-control"
+            id="id_class"
+          >
+            <option value="I">I</option>
+            <option value="II">II</option>
+            <option value="III">III</option>
+            <option value="IV">IV</option>
+            <option value="V">V</option>
+            <option value="VI">VI</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="id_gender" class="form-label"> Gender :-</label>
+          <div
+            class="custom-control custom-radio form-check-inline"
+            *ngFor="let item of genderList"
+          >
+            <label [for]="item" class="custom-control-label p-1">{{
+              item
+            }}</label>
+
+            <input
+              type="radio"
+              [value]="item"
+              [id]="item"
+              class="custom-control-input"
+              formControlName="gender"
+            />
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label for="id_subject" class="form-label"> Choose Favorite :-</label>
+          <div
+            class="custom-control custom-radio form-check-inline"
+            *ngFor="let item of subjectList"
+          >
+            <label [for]="item.value" class="custom-control-label p-1">{{
+              item.value
+            }}</label>
+
+            <input
+              type="checkbox"
+              [value]="item.value"
+              [id]="item.value"
+              [checked]="item.isSelected"
+              (change)="onChange(item.value)"
+              class="custom-control-input"
+              formControlName="subject"
+            />
+          </div>
+        </div>
+        <div class="col-md-6 mt-4">
+          <button
+            [disabled]="registerForm.invalid"
+            type="submit"
+            class="btn btn-primary px-5"
+            (click)="registerFormSubmit()"
+          >
+            Submit
+          </button>
+          <button type="button" class="btn btn-secondary px-3 ms-2">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<h4 class="fs-3 m-10">Students</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">Roll No</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Class</th>
+      <th scope="col">Subject</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let singleUser of student">
+      <td>{{ singleUser.name }}</td>
+      <td>{{ singleUser.age }}</td>
+      <td>{{ singleUser.rollNo }}</td>
+      <td>{{ singleUser.gender }}</td>
+      <td>{{ singleUser.class }}</td>
+      <td>{{ singleUser.subject[0] }}</td>
+    </tr>
+  </tbody>
+</table>
