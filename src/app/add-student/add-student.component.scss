@@ -1,4 +1,10 @@
 
-body {
+.modal-header {
   background-color: lightblue;
+}
+.modal-body{
+  background-color: rgb(214, 238, 247);
+}
+:host::ng-deep tbody {
+  background-color: #e7fbf9;
 }

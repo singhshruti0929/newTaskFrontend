@@ -1,25 +1,104 @@
-<div class="col-md-6">
-  <label for="id_class" class="form-label"> Choose Class</label>
-  <select
-    class="select col-md-10 form-control"
-    id="id_class"
-  >
-    <option *ngFor="let item of classList" value="{{ item }}">
-      {{ item }}
-    </option>
-  </select>
+<div class="row">
+  <div class="col-md-4 align-right">
+    <label for="id_subject" class="form-label"> Choose Subject</label>
+    <div class="d-flex">
+      <button type="button" class="btn btn-success me-2" (click)="search()">
+        Search
+      </button>
+      <select
+        class="select col-md-10 form-control"
+        id="id_subject"
+        [(ngModel)]="subject"
+      >
+        <option *ngFor="let item of subjectList" value="{{ item }}">
+          {{ item }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-2"></div>
+  <div class="col-md-4">
+    <label for="id_class" class="form-label"> Choose Class</label>
+    <div class="d-flex">
+      <select
+        class="select col-md-10 form-control"
+        id="id_class"
+        [(ngModel)]="class"
+      >
+        <option *ngFor="let item of classList" value="{{ item }}">
+          {{ item }}
+        </option>
+      </select>
+      <button type="button" class="btn btn-danger ms-2" (click)="searchClass()">
+        Search
+      </button>
+    </div>
+  </div>
 </div>
 
-<div class="col-md-6 align-right">
-  <label for="id_subject" class="form-label"> Choose Subject</label>
-  <select
-    class="select col-md-10 form-control"
-    id="id_subject"
-    [(ngModel)]="subject"
-  >
-    <option *ngFor="let item of subjectList" value="{{ item }}">
-      {{ item }}
-    </option>
-  </select>
-  <button type="button" class="btn btn-success" (click)="search()">Search</button>
+<div class="row" *ngIf="student.length > 0">
+  <div class="col-md-6">
+    <table class="table table-striped">
+      <thead>
+        <h3>Student List</h3>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Roll No</th>
+          <th scope="col">Gender</th>
+          <th scope="col">Class</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let singleUser of student">
+          <td>{{ singleUser.name }}</td>
+          <td>{{ singleUser.rollNo }}</td>
+          <td>{{ singleUser.gender }}</td>
+          <td>{{ singleUser.class }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <table class="table table-striped">
+      <thead>
+        <h3>Teacher List</h3>
+        <tr>
+          <th scope="col">Teacher Name</th>
+          <th scope="col">Teacher Gender</th>
+          <th scope="col">Teacher Age</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let singleUser of teacher">
+          <td>{{ singleUser.name }}</td>
+          <td>{{ singleUser.gender }}</td>
+          <td>{{ singleUser.age }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row" *ngIf="classes.length > 0">
+  <div class="col-md-6">
+    <table class="table table-striped">
+      <thead>
+        <h3>Class List</h3>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Roll No</th>
+          <th scope="col">Gender</th>
+          <th scope="col">Class</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let singleUser of classes">
+          <td>{{ singleUser.name }}</td>
+          <td>{{ singleUser.rollNo }}</td>
+          <td>{{ singleUser.gender }}</td>
+          <td>{{ singleUser.class }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

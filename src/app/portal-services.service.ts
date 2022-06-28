@@ -25,8 +25,44 @@ export class PortalServicesService {
     );
   }
 
+  getStudent(id: string) {
+    console.log(id);
+    return this.http.get(`${this.serverUrl}/student/getStudent/${id}`);
+  }
+
+  editStudent(data: any) {
+    console.log(data, '34');
+    return this.http.post(
+      `${this.serverUrl}/student/editStudent/${data._id}`,
+      data
+    );
+  }
+
+  // editTeacher(data: any) {
+  //   return this.http.post(
+  //     `${this.serverUrl}/teacher/editTeacher/${data.id}`,
+  //     data
+  //   );
+  // }
+
   addTeacher(data: any) {
     return this.http.post(`${this.serverUrl}/teacher/addTeacher`, data);
+  }
+
+  softDeleteStudent(id: string) {
+    const data = {
+      isActive: false,
+    };
+    return this.http.post(`${this.serverUrl}/student/softDelete/${id}`, data);
+  }
+  softDeleteTeacher(id: string) {
+    const data = {
+      isActive: false,
+    };
+    return this.http.post(
+      `${this.serverUrl}/teacher/softDeleteTeacher/${id}`,
+      data
+    );
   }
 
   getTeachers() {
@@ -39,15 +75,13 @@ export class PortalServicesService {
   }
 
   getBySubject(subject: string) {
-    console.log(subject);
-    return this.http
-      .post(`${this.serverUrl}/student/getBySubject`, subject)
-      .subscribe(
-        (res: any) => {
-          console.log(res);
-          this.matchedSubjects = res.matched;
-        },
-        (err: any) => console.log(err)
-      );
+    return this.http.get(`${this.serverUrl}/student/getBySubject/${subject}`);
+  }
+
+  getByClass(className: string) {
+    const data = {
+      class: className,
+    };
+    return this.http.post(`${this.serverUrl}/student/getByClass`, data);
   }
 }

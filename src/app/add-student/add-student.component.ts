@@ -1,13 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PortalServicesService } from '../portal-services.service';
+import { AfterViewInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
   styleUrls: ['./add-student.component.scss'],
 })
 export class AddStudentComponent implements OnInit {
+  chooseSubject: any[] = [];
   student: any[] = [];
+  displayedColumns: string[] = [
+    'name',
+    'age',
+    'rollNo',
+    'gender',
+    'class',
+    'subject',
+  ];
+  dataSource!: MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   registerForm: FormGroup = this.fb.group({
     name: [''],
     gender: [''],
@@ -28,9 +47,12 @@ export class AddStudentComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private portalServicesService: PortalServicesService
+    private portalServicesService: PortalServicesService,
+    private router: Router
   ) {
     this.student = this.portalServicesService.student;
+    this.dataSource = new MatTableDataSource(this.student);
+    console.log(this.dataSource);
   }
 
   get name(): any {
@@ -58,13 +80,12 @@ export class AddStudentComponent implements OnInit {
     });
   }
   getSubject() {
-    const chooseSubject: any = [];
     this.subjectList.forEach((singleSubject: any) => {
       if (singleSubject.isSelected === true) {
-        chooseSubject.push(singleSubject.value);
+        this.chooseSubject.push(singleSubject.value);
       }
     });
-    return chooseSubject;
+    return this.chooseSubject;
   }
   ngOnInit(): void {
     this.portalServicesService.getStudents();
@@ -73,7 +94,6 @@ export class AddStudentComponent implements OnInit {
     this.student = this.portalServicesService.student;
     console.log(this.student);
   }
-
 
   registerFormSubmit() {
     const selected = this.getSubject();
@@ -85,10 +105,39 @@ export class AddStudentComponent implements OnInit {
       (res: any) => {
         this.registerForm.reset();
         this.portalServicesService.getStudents();
+        this.chooseSubject.length = 0;
+        this.chooseSubject = [];
+        // this.dataSource = new MatTableDataSource(res);
+        // this.dataSource.paginator = this.paginator;
+        // this.dataSource.sort = this.sort;
       },
       (err: any) => {
         console.log(err);
       }
     );
   }
-}
+
+  editStudent(id: any) {
+    this.router.navigate(['/editStudent/' + id]);
+  }
+
+  deleteStudent(id: any) {
+    this.portalServicesService.softDeleteStudent(id).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.portalServicesService.getStudents();
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage();
+    // }
+  }
+

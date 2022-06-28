@@ -16,7 +16,7 @@ export class AddTeacherComponent implements OnInit {
     subject: [],
   });
   genderList: string[] = ['Trans', 'Male', 'Female'];
-  subjectList: string[] = ['English', 'Science', 'Hindi', 'Maths'];
+  subjectList: string[] = ['English', 'Science', 'Hindi', 'Maths', 'Drawing'];
 
   constructor(
     private fb: FormBuilder,
@@ -43,14 +43,26 @@ export class AddTeacherComponent implements OnInit {
   }
   ngDoCheck() {
     this.teacher = this.portalServicesService.teacher;
-    console.log(this.teacher);
   }
 
   registerFormSubmit() {
     const formData = this.registerForm.value;
     this.portalServicesService.addTeacher(formData).subscribe(
       (res: any) => {
+        this.portalServicesService.getTeachers();
         this.registerForm.reset();
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
+
+  softDeleteTeacher(id: any) {
+    this.portalServicesService.softDeleteTeacher(id).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.portalServicesService.getTeachers();
       },
       (err: any) => {
         console.log(err);

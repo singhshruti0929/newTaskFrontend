@@ -118,7 +118,7 @@
   </div>
 </div>
 
-<h4 class="fs-3 m-10">Students</h4>
+<!--  <h4 class="fs-3 m-10">Students</h4> -->
 <table class="table table-striped">
   <thead>
     <tr>
@@ -128,6 +128,9 @@
       <th scope="col">Gender</th>
       <th scope="col">Class</th>
       <th scope="col">Subject</th>
+      <th scope="col">Edit</th>
+
+      <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -138,6 +141,12 @@
       <td>{{ singleUser.gender }}</td>
       <td>{{ singleUser.class }}</td>
       <td>{{ singleUser.subject[0] }}</td>
+      <td (click)="editStudent(singleUser._id)">
+        <button class="btn btn-warning">Edit</button>
+      </td>
+      <td (click)="deleteStudent(singleUser._id)">
+        <button class="btn btn-danger">Delete</button>
+      </td>
     </tr>
   </tbody>
 </table>

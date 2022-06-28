@@ -9,6 +9,12 @@ import { AddTeacherComponent } from './add-teacher/add-teacher.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FilterDataComponent } from './filter-data/filter-data.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { EditStudentComponent } from './edit-student/edit-student.component';
+
+
 
 @NgModule({
   declarations: [
@@ -16,6 +22,8 @@ import { FilterDataComponent } from './filter-data/filter-data.component';
     AddStudentComponent,
     AddTeacherComponent,
     FilterDataComponent,
+    EditStudentComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -25,6 +33,9 @@ import { FilterDataComponent } from './filter-data/filter-data.component';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
